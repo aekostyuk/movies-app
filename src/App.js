@@ -56,8 +56,10 @@ function App() {
         console.log(data.results);
         //return data.results;
         //setNextMovies(prevState => {return data.results});
-        setMovies(prevState => ([...prevState, ...data.results]));
-        setIsFetching(false);
+        setTimeout(() => {
+          setMovies(prevState => ([...prevState, ...data.results]));
+          setIsFetching(false);
+        }, 2000);
       } else {
         setMovies(data.results);
       }
@@ -99,7 +101,7 @@ function App() {
       {movies.length > 0 && movies.map(movie => (
         <Movie key={movie.id} {...movie}/>
       ))}
-      {isFetching && 'Загружаю еще фильмы...'}
+      {isFetching && <div className="loading"><span>Загружаю еще фильмы...</span></div>}
     </main>
   </>
   );
