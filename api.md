@@ -1,6 +1,10 @@
-### API key
+### API key v4
 
 "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMjk1YWExODBhYzBmYzA2Njk0YjI5MjhiZTQ5MjEwZiIsInN1YiI6IjYwMGExMGY2ZDU1YzNkMDAzZTZjZTFkYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.g0_PFLJolVDl0TxKvgrbljkDRn_coTxJbPkUAOd6t1g"
+
+### API key v3
+
+"3295aa180ac0fc06694b2928be49210f"
 
 ### API фильмов
 

@@ -51,9 +51,11 @@ function App() {
       </form>
     </header>
     <main id="main">
+      
       {movies.length > 0 && movies.map(movie => (
           <Movie key={movie.id} {...movie}/>
         ))}
+        
     </main>
   </>
   );
