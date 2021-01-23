@@ -9,11 +9,11 @@ const FEATURED_API = `https://api.themoviedb.org/3/discover/movie?sort_by=popula
 const SEARCH_API = `https://api.themoviedb.org/3/search/movie?&api_key=${APIKEY}&query=`;
 
 function App() {
-  const [movies, setMovies] = useState(() => { return [] });
-  const [isFetching, setIsFetching] = useState(() => { return false });
+  const [movies, setMovies] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [page, setPage] = useState(() => { return 1 });
-  const [nextMovies, setNextMovies] = useState(() => { return [] });
+  const [page, setPage] = useState(1);
+  //const [nextMovies, setNextMovies] = useState(() => { return [] });
 
   //let useAPI = FEATURED_API;
 
@@ -29,40 +29,21 @@ function App() {
 
   useEffect(() => {
     getMovies(FEATURED_API + 1);
-  }, []);
-
-  useEffect(() => {
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
     if (!isFetching) return;
-    
-    
-    fetchMoreListItems(page);
+    //fetchMoreListItems(page);
+    getMovies(FEATURED_API + page, true);
   }, [isFetching]);
 
   const handleScroll = () => {
     if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
     console.log('Загружаем еще');
     setIsFetching(true);
-  }
-
-  const fetchMoreListItems = (page) => {
-    //setMovies();
-    //getMovies(FEATURED_API + page);
-    //nextPage++;
-    
-    getMovies(FEATURED_API + page, true);
-    
-    console.log(page);
-    setTimeout(() => {
-      console.log(nextMovies);
-      setMovies(prevState => ([...prevState, ...nextMovies]));
-      
-      setIsFetching(false);
-    }, 200);
   }
 
   const getMovies = (API, pager = false) => {
@@ -72,7 +53,11 @@ function App() {
       //console.log(data);
       setPage((prevState) => { return prevState+1 });
       if(pager === true) {
-        setNextMovies(prevState => {return data.results});
+        console.log(data.results);
+        //return data.results;
+        //setNextMovies(prevState => {return data.results});
+        setMovies(prevState => ([...prevState, ...data.results]));
+        setIsFetching(false);
       } else {
         setMovies(data.results);
       }
@@ -111,15 +96,10 @@ function App() {
       </form>
     </header>
     <main id="main">
-      
       {movies.length > 0 && movies.map(movie => (
-          <Movie key={movie.id} {...movie}/>
-        ))}
-<<<<<<< HEAD
-        
-=======
-        {isFetching && 'Загружаю еще фильмы...'}
->>>>>>> 040042fbcf3715d71f0d45d703eaddae1b9e1a60
+        <Movie key={movie.id} {...movie}/>
+      ))}
+      {isFetching && 'Загружаю еще фильмы...'}
     </main>
   </>
   );
